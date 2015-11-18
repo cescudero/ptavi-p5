@@ -117,7 +117,7 @@ por la respuesta 200 OK.
  ** ¿Se utilizan bits de padding?
  No
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
- 16ms.
+ 0.02 segundos.
  ** ¿Cuántos bits/segundo estamos enviando?
  650556 bits por segundo
 
@@ -158,7 +158,7 @@ Para el primer flujo el maximo es de 183.10 ms y el valor medio es 153.24 ms. Pa
  ** ¿Qué método SIP se utiliza?
  BYE.
  ** ¿En qué trama(s)?
- en las tramas 924, 925, 927.
+ en las tramas 924, 925, 927 y 933.
  ** ¿Por qué crees que se envía varias veces?
  se envia varias veces porque en UDP se pueden perder los paquetes por eso envia hasta recivir la respuesta 200 OK.
 
@@ -184,16 +184,21 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
 
 17. Observa las diferencias en el inicio de la conversación entre el entorno del laboratorio y el del ejercicio anterior:
  ** ¿Es necesario el uso de DNS y STUN? ¿Por qué?
+No es necesario el uso de DNS y STUN porque es una red pública.
  ** ¿Son diferentes el registro y la descripción de la sesión?
-
+son iguales.
 
 18. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
  ** ¿Cuántos flujos tenemos?
+ hay dos flujos 
  ** ¿Cuál es su periodicidad?
+ la periodicidad es igual que en el caso anterior 0.2 segundos.
  ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
+ Flujo 1: valor maximo de delta 30.5340 ms, valor maximo del jitter 5.35 ms, valor medio del jitter 3.1
+ flujo 2: valor maximo de delta 30.47 ms, valor maximo del jitter 5.4 ms, valor medio jitter 3.1 ms
  ** ¿Podrías reproducir la conversación desde Wireshark? ¿Cómo? Comprueba que poniendo un valor demasiado pequeño para el buffer de jitter, la conversación puede no tener la calidad necesaria.
  ** ¿Sabrías decir qué tipo de servicio ofrece sip:9999@qxip.net?
-
+Música?
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
