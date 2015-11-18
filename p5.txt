@@ -28,7 +28,7 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
  es mayor UDP.
  
  ** ¿Qué otros protocolos podemos ver en la jerarquía de protocolos?
-aparecen protocolos comno RTP,RTCP,TCP.
+aparecen protocolos comno RTP, RTCP, TCP, DNS, HTTP, ARP, STUN, SIP, ICMP.
 
 4. Observa por encima el flujo de tramas en el menú de Statistics en IO Graphs. La captura que estamos viendo incluye desde la inicialización (registro) de la aplicación hasta su finalización, con una llamada entremedias.
  ** Filtra por sip para conocer cuándo se envían paquetes SIP. ¿En qué segundos tienen lugar esos envíos?
@@ -42,53 +42,84 @@ los paquetes RTP se envian entre el segundo 15 y el segundo 40.
 
 5. Analiza las primeras cuatro tramas de la captura nada más arrancar Ekiga.
  ** ¿Qué servicio es el utilizado en estas tramas?
+ DNS.
  ** ¿Cuál es la dirección IP del servidor de nombres del ordenador que ha lanzado Ekiga?
+ la direccion IP es 80.58.61.250
  ** ¿Qué dirección IP (de ekiga.net) devuelve el servicio de nombres?
+ 86.64.162.35
  ** ¿Por qué se pide también para 35.162.64.86.in-addr.arpa?
-
+para saber el nombre asociado a dicha IP.
 
 6. A continuación, hay más de una docena de tramas TCP/HTTP.
  ** ¿Podrías decir la URL que se está pidiendo?
+ esta pidiendo la http://ekiga.net/ip/
  ** ¿Qué user agent (UA) la está pidiendo?
+ ekiga.
  ** ¿Qué devuelve el servidor?
  ** Si lanzamos el navegador web, por ejemplo, Mozilla Firefox, y vamos a la misma URL, ¿qué recibimos? ¿Qué es, entonces, lo que está respondiendo el servidor?
+ si buscamos la url nos encontramos una direccion ip 193.147.49.103.
+ 
 
 
 7. Hasta la trama 45 se puede observar una secuencia de tramas del protocolo STUN.
  ** ¿Por qué crees que se hace uso de este protocolo en esta captura? Busca en la Wikipedia.
+ para poder saber que restricciones impone el NAT.
  ** ¿Estamos tras un NAT?
+ afirmativo.
 
 
 8. La trama 46 es la primera trama SIP. En un entorno como el de Internet, lo habitual es desconocer la dirección IP de la otra parte al realizar una llamada. Por eso, todo usuario registra su localización en un servidor Registrar. El Registrar guarda información sobre los usuarios en un servidor de localización que puede ser utilizado para localizar usuarios.
  ** ¿Qué dirección IP tiene el servidor Registrar?
+ 86.64.162.35
+ 
  ** ¿A qué puerto (del servidor Registrar) se envían los paquetes SIP?
+ se envian desde el puerto 5060.
+ 
  ** ¿Qué método SIP utiliza el UA para registrarse?
+ register
+ 
  ** Además de REGISTER, ¿qué instrucciones SIP entiende el UA?
-
+entiende invite, ack, cancel, bye...
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 9. Fijémonos en las tramas siguientes a la número 46:
  ** ¿Se registra con éxito en el primer intento?
+ no, no consigue registrarse bien al primer intento.
+ 
  ** ¿Cómo sabemos si el registro se ha realizado correctamente o no?
- ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
- ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
+por la respuesta 200 OK.
 
+ ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
+ 
+ ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
+3600 segundos.
 
 10. Una vez registrados, podemos efectuar una llamada. Vamos a probar con el servicio de eco de Ekiga que nos permite comprobar si nos hemos conectado correctamente. El servicio de eco tiene la dirección sip:500@ekiga.net. Veamos el INVITE de cerca.
  ** ¿Puede verse el nombre del que efectúa la llamada, así como su dirección SIP?
+ si aparecen estos datos del que efectua la llamada, en la cabecera from.
+ 
  ** ¿Qué es lo que contiene el cuerpo de la trama? ¿En qué formato/protocolo está?
+ contiene los datos de la sesion. SDP.
  ** ¿Tiene éxito el primer intento? ¿Cómo lo sabes?
+ no tiene exito el primer intento,se sabe por la respuesta (407 Proxy authentication required).
  ** ¿En qué se diferencia el segundo INVITE más abajo del primero? ¿A qué crees que se debe esto?
 
 
 11. Una vez conectado, estudia el intercambio de tramas.
  ** ¿Qué protocolo(s) se utiliza(n)? ¿Para qué sirven estos protocolos?
+ RTP para transmitir audio y video y RTCP que es un protocolo de control del flujo.
+ una vez se conecta utiliza el protocolo rtp para intercambiar paquetes multimedia.
+ 
  ** ¿Cuál es el tamaño de paquete de los mismos?
+ 214 bytes para RTP y 102 bytes para RTCP.
  ** ¿Se utilizan bits de padding?
+ No
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
+ 16ms.
  ** ¿Cuántos bits/segundo estamos enviando?
+ 650556 bits por segundo
 
 
 
